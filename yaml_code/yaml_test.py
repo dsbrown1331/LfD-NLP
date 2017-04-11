@@ -2,6 +2,8 @@
 """
 Created on Mon Apr 10 21:07:46 2017
 
+Simple script with examples of how to use PyYaml found online
+
 @author: daniel
 """
 
