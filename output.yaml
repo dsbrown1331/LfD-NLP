@@ -1,0 +1,9 @@
+goal: [10, 60, 5, 5]
+height: 100
+objects:
+- [40, 30, 5, 0, 1]
+- [60, 10, 5, 1, 2]
+staging_area: [80, 80, 20, 20]
+table: [0, 0, 70, 70]
+task_object: [5, 2, 3]
+width: 100
