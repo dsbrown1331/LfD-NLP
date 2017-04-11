@@ -11,7 +11,7 @@ Created on Mon Apr 10 21:07:46 2017
 import yaml
 
 #how to open a yaml file
-with open("world.yaml", 'r') as stream:
+with open("example_world.yaml", 'r') as stream:
     try:
         world_settings = yaml.load(stream)
         print world_info 
