@@ -92,6 +92,8 @@ def generateNewObject(objects):
 
 
 def main():
+    print id_to_shape
+    print id_to_color
     if len(sys.argv) != 13:
         print "usage error: python writeWorldToYaml -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename"
         print 'Number of arguments:', len(sys.argv), 'arguments.'
@@ -159,8 +161,7 @@ def main():
     data['task_object'] = task_object 
     data['staging_area'] = staging_area
     data['target'] = target_obj
-    data['color_map'] = id_to_color
-    data['shape_map'] = id_to_shape
+    data['color_map'] = 
 
     stream = file(filename + '.yaml', 'w')
     yaml.dump(data, stream)    # Write a YAML representation of data to 'document.yaml'.
