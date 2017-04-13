@@ -18,14 +18,14 @@ import random
 
 
 #settings
-width = 1300
-height = 1000
-table_width = 800
-table_topleft = (100,100)  #(x,y) coordinate of top left corner of table
-staging_topleft = (1000,100)
-object_width = 100
+width = 10#1300
+height = 10#1000
+table_width = 8#800
+table_topleft = (0,0)#(100,100)  #(x,y) coordinate of top left corner of table
+staging_topleft = (8,8)#(1000,100)
+object_width = 2#100
 staging_length = object_width
-object_buffer = 10
+object_buffer = 1#10
 target_width = object_width
 
 shapes = {'circle':0,'square':1,'triangle':2,'star':3,'diamond':4}
@@ -40,8 +40,12 @@ def placeLandmark(relationship):
         #place so there is room for at least one object to right of target
         x = random.randint(table_topleft[0] + object_buffer, table_width - 2 * object_buffer - 2 * object_width)
         y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'left':
+        #place so there is room for at least one object to left of target
+        x = random.randint(table_topleft[0] + 2 * object_buffer + object_width, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     else:
-        print "unknown relationship"
+        print "ERROR: unknown relationship"
         sys.exit(0)
     return x,y
 
@@ -52,8 +56,12 @@ def placeTarget(landmark_pos, relationship):
         #place so it is in right half-plane based on position of target
         x = random.randint(landmark_x + object_width + object_buffer, table_width - object_buffer - object_width)
         y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'left':
+        #place to it is in left-half plane of position target
+        x = random.randint(table_topleft[0] + object_buffer, landmark_x - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     else:
-        print "unknown relationship"
+        print "ERROR: unknown relationship"
         sys.exit(0)
     return x,y
 

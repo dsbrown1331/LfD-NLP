@@ -40,8 +40,12 @@ def placeLandmark(relationship):
         #place so there is room for at least one object to right of target
         x = random.randint(table_topleft[0] + object_buffer, table_width - 2 * object_buffer - 2 * object_width)
         y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'left':
+        #place so there is room for at least one object to left of target
+        x = random.randint(table_topleft[0] + 2 * object_buffer + object_width, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     else:
-        print "unknown relationship"
+        print "ERROR: unknown relationship"
         sys.exit(0)
     return x,y
 
@@ -52,8 +56,12 @@ def placeTarget(landmark_pos, relationship):
         #place so it is in right half-plane based on position of target
         x = random.randint(landmark_x + object_width + object_buffer, table_width - object_buffer - object_width)
         y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'left':
+        #place to it is in left-half plane of position target
+        x = random.randint(table_topleft[0] + object_buffer, landmark_x - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     else:
-        print "unknown relationship"
+        print "ERROR: unknown relationship"
         sys.exit(0)
     return x,y
 
@@ -92,8 +100,6 @@ def generateNewObject(objects):
 
 
 def main():
-    print id_to_shape
-    print id_to_color
     if len(sys.argv) != 13:
         print "usage error: python writeWorldToYaml -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename"
         print 'Number of arguments:', len(sys.argv), 'arguments.'
@@ -161,7 +167,8 @@ def main():
     data['task_object'] = task_object 
     data['staging_area'] = staging_area
     data['target'] = target_obj
-    data['color_map'] = 
+    data['color_map'] = id_to_color
+    data['shape_map'] = id_to_shape
 
     stream = file(filename + '.yaml', 'w')
     yaml.dump(data, stream)    # Write a YAML representation of data to 'document.yaml'.
