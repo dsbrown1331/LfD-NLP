@@ -3,10 +3,8 @@
 """
 Created on Mon Apr 10 21:25:04 2017
 
-Still a work in progress, but the idea is to have a bunch of parameters we can set and then be
-able to generate a bunch of different worlds according to some desired spatial relationship.
-
-Currently everything is hard-coded just to get something simple working.
+usage: 
+python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
 
 @author: daniel
 """
@@ -18,15 +16,17 @@ import random
 
 
 #settings
-width = 10#1300
-height = 10#1000
-table_width = 8#800
-table_topleft = (0,0)#(100,100)  #(x,y) coordinate of top left corner of table
-staging_topleft = (8,8)#(1000,100)
-object_width = 2#100
+width = 1300
+height = 1000
+table_width = 800
+table_topleft = (100,100)  #(x,y) coordinate of top left corner of table
+staging_topleft = (1000,100)
+object_width = 100
 staging_length = object_width
-object_buffer = 1#10
+object_buffer = 10
 target_width = object_width
+near_range = 2 * object_buffer + 2 * object_width
+far_range = near_range + 2 * object_width + 2 * object_buffer
 
 shapes = {'circle':0,'square':1,'triangle':2,'star':3,'diamond':4}
 colors = {'blue':0, 'red':1,'green':2,'purple':3,'yellow':4,'orange':5}
@@ -44,6 +44,24 @@ def placeLandmark(relationship):
         #place so there is room for at least one object to left of target
         x = random.randint(table_topleft[0] + 2 * object_buffer + object_width, table_width - object_buffer - object_width)
         y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'up':
+        #place so there is room above landmark for at least one object
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + 2 * object_buffer + object_width, table_width - object_buffer - object_width)
+    elif relationship == 'down':
+        #place so there is room below landmark for at least one object
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - 2 * object_buffer - 2 * object_width)
+    elif relationship == 'on':
+        #place landmark anywhere
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'near' or relationship == 'far':
+        #place landmark any where
+        #x = random.randint(table_topleft[0] + 2 * object_buffer + object_width, table_width - 2 * object_buffer - 2 * object_width)
+        #y = random.randint(table_topleft[1] + 2 * object_buffer + object_width, table_width - 2 * object_buffer - 2 * object_width)
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     else:
         print "ERROR: unknown relationship"
         sys.exit(0)
@@ -60,6 +78,28 @@ def placeTarget(landmark_pos, relationship):
         #place to it is in left-half plane of position target
         x = random.randint(table_topleft[0] + object_buffer, landmark_x - object_buffer - object_width)
         y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'up':
+        #place above landmark
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, landmark_y - object_buffer - object_width)
+    elif relationship == 'down':
+        #place target below landmark
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + landmark_y + object_width + object_buffer, table_width - object_buffer - object_width)
+    elif relationship == 'on':
+        #place target on landmark
+        x = landmark_x
+        y = landmark_y
+    elif relationship == 'near':
+        #place within near_range of landmark
+        target_pos = placeObjectNearLandmark([landmark_x, landmark_y])
+        x = target_pos[0]
+        y = target_pos[1]
+    elif relationship == 'far':
+        #place outside of far_range of landmark
+        target_pos = placeObjectFarFromLandmark([landmark_x, landmark_y])
+        x = target_pos[0]
+        y = target_pos[1]
     else:
         print "ERROR: unknown relationship"
         sys.exit(0)
@@ -76,7 +116,51 @@ def intersectsOtherObjects(new_obj, objects):
 
     return False
     
+def placeObjectFarFromLandmark(landmark):
+    reject_count = 0
+    while True:
+        #generate candidate position until we find one that fits in the world and
+        # is within near_range of landmark
+        new_obj_x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        new_obj_y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+        new_obj = [new_obj_x, new_obj_y]
+        #print new_obj
+        if not intersectsOtherObjects(new_obj, [landmark]) and dist(new_obj, landmark) >= far_range:
+            break
+        reject_count += 1
+        if reject_count > 500:
+            print "ERROR: world is too small or far_range too big, can't fit target"
+            sys.exit()
 
+    return new_obj
+    
+def placeObjectNearLandmark(landmark):
+    reject_count = 0
+    while True:
+        #generate candidate position until we find one that fits in the world and
+        # is within near_range of landmark
+        new_obj_x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        new_obj_y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
+        new_obj = [new_obj_x, new_obj_y]
+        #print new_obj
+        if not intersectsOtherObjects(new_obj, [landmark]) and dist(new_obj, landmark) <= near_range:
+            break
+        reject_count += 1
+        if reject_count > 500:
+            print "ERROR: world is too small or near_range too small, can't fit target"
+            sys.exit()
+
+    return new_obj
+
+"""compute distance between centers of objects"""
+def dist(obj1, obj2):
+    center_x1 = obj1[0] + object_width / 2.0
+    center_x2 = obj2[0] + object_width / 2.0
+    center_y1 = obj1[1] + object_width / 2.0
+    center_y2 = obj2[1] + object_width / 2.0
+    delta_x = (center_x1 - center_x2)
+    delta_y = (center_y1 - center_y2)
+    return np.sqrt(delta_x ** 2 + delta_y ** 2)
 
 #TODO add feature selection to be unique over items so we don't have duplicates
 def generateNewObject(objects):
@@ -101,7 +185,7 @@ def generateNewObject(objects):
 
 def main():
     if len(sys.argv) != 13:
-        print "usage error: python writeWorldToYaml -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename"
+        print "usage error: python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename"
         print 'Number of arguments:', len(sys.argv), 'arguments.'
         print 'Argument List:', str(sys.argv)
     landmark_color = sys.argv[sys.argv.index('-l') + 1]
@@ -149,8 +233,8 @@ def main():
         new_obj = generateNewObject(intersection_list)
         intersection_list.append(new_obj)
         objects.append(new_obj)
-        print "generated object"
-        print intersection_list
+        #print "generated object"
+        #print intersection_list
 
     #output world into yaml file
 
