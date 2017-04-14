@@ -4,7 +4,11 @@
 Created on Mon Apr 10 21:25:04 2017
 
 usage: 
-python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
+>> python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
+
+Example:
+>> python writeWorldToYaml.py -o blue square -l red circle -r left -n 3 -f leftPlacementTest
+
 
 @author: daniel
 """
@@ -26,7 +30,7 @@ staging_length = object_width
 object_buffer = 10
 target_width = object_width
 near_range = 2 * object_buffer + 2 * object_width
-far_range = near_range + 3 * object_width
+far_range = near_range + 2 * object_width + 2 * object_buffer
 
 shapes = {'circle':0,'square':1,'triangle':2,'star':3,'diamond':4}
 colors = {'blue':0, 'red':1,'green':2,'purple':3,'yellow':4,'orange':5}

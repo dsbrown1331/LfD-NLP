@@ -4,7 +4,11 @@
 Created on Mon Apr 10 21:25:04 2017
 
 usage: 
-python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
+>> python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
+
+Example:
+>> python writeWorldToYaml.py -o blue square -l red circle -r left -n 3 -f leftPlacementTest
+
 
 @author: daniel
 """
