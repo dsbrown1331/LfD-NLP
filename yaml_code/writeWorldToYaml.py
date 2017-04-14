@@ -9,6 +9,9 @@ usage:
 Example:
 >> python writeWorldToYaml.py -o blue square -l red circle -r left -n 3 -f leftPlacementTest
 
+possible shape names: circle, square, triangle, star, diamond
+possible colors: blue, red, green, purple, yellow, orange
+possible relations: left, right, up, down, on, near, far
 
 @author: daniel
 """
