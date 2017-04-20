@@ -5,10 +5,25 @@ To run the yaml files you need python-yaml
 ```{r, engine='sh', count_lines}
 sudo apt-get install python-yaml
 ```
+To generate yaml files use the writeWorldToYaml.py file in the yaml_code directory
 
-TODO: 
+usage: 
+```{r, engine='sh', count_lines}
+python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
+```
+Here are the possible arguments
 
-I have some basic test scripts for a hard coded world. Need to make them automatically generate objects in good positions according to a desired spatial relationship.
+possible shape names: circle, square, triangle, star, diamond
+
+possible colors: blue, red, green, purple, yellow, orange
+
+possible relations: left, right, up, down, on, near, far
+
+
+For example, to generate a world where the goal is to place a blue square to the left of a red circle with two distractors you would use the following command:
+```{r, engine='sh', count_lines}
+python writeWorldToYaml.py -o blue square -l red circle -r left -n 3 -f leftPlacementTest
+```
 
 
 Ideas / Thoughts:
