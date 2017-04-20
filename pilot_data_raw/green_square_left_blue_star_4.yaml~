@@ -1,0 +1,9 @@
+target: [400, 200, 100]
+task_object: [100, 'square', 'green']
+objects:
+- [100, 100, 100, 'star', 'orange']
+- [500, 200, 100, 'star', 'blue']
+- [100, 300, 100, 'square', 'blue']
+- [300, 300, 100, 'triangle', 'purple']
+- [500, 300, 100, 'circle', 'purple']
+

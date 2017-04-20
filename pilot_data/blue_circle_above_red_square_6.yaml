@@ -1,6 +1,6 @@
-target: [0, 400, 100]
-task_object: [100, 'circle', 'blue']
 objects:
-- [600, 0, 100, 'star', 'blue']
-- [600, 200, 100, 'triangle', 'blue']
-- [600, 400, 100, 'circle', 'blue']
+- [600, 0, 100, 3, 0]
+- [600, 200, 100, 2, 0]
+- [600, 400, 100, 0, 0]
+target: [0, 400, 100]
+task_object: [100, 0, 0]

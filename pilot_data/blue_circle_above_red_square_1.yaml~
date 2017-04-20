@@ -1,9 +1,0 @@
-objects:
--[300, 100, 100, 'triangle', 'green']
--[100,300, 100, 'square', 'red']
--[500,300, 100, 'circle', 'purple']
-
-target: [100,100, 100]
-
-object
-['blue','circle']
