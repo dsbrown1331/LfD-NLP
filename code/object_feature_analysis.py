@@ -5,6 +5,9 @@ Created on Apr 20, 2017
 '''
 
 import yaml
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
 
 shapes = {'circle':0,'square':1,'triangle':2,'star':3,'diamond':4}
 colors = {'blue':0, 'red':1,'green':2,'purple':3,'yellow':4,'orange':5}
@@ -46,11 +49,7 @@ def findInvariantObjects(yaml_filenames):
                 converged = False
     return invariant_objects
         
-    
-""" extract the shape and color features for each object, if there is more than one object of a type it only returns a single object
-    TODO: It seems like we should have a unique identifier for each object even if they look identical but have different position etc.
-"""
-def extractObjectFeatures(yaml_filename):
+def getYamlData(yaml_filename):
     #how to open a yaml file
     with open(yaml_filename, 'r') as stream:
         try:
@@ -58,6 +57,15 @@ def extractObjectFeatures(yaml_filename):
             #print world
         except yaml.YAMLError as exc:
             print exc 
+            sys.exit()
+    return world
+    
+
+""" extract the shape and color features for each object, if there is more than one object of a type it only returns a single object
+    TODO: It seems like we should have a unique identifier for each object even if they look identical but have different position etc.
+"""
+def extractObjectFeatures(yaml_filename):
+    world = getYamlData(yaml_filename)
             
     object_features = set()
     for obj in world['objects']:
@@ -65,19 +73,106 @@ def extractObjectFeatures(yaml_filename):
     
     return object_features    
         
-        
-#Testing code
-scenarios = ['red_triangle_right_green_circle_', 'green_square_left_blue_star_', 'blue_circle_above_red_square_']
-#scenarios = ['red_triangle_right_green_circle_']
 
-for s in scenarios:
-    filenames = []
-    for i in range(1,11):
-        filenames.append("/home/daniel/Code/LfD-NLP/pilot_data/" + s + str(i) + ".yaml")
+""" given features, extract the displacements of the target from the object specified by features
+    TODO: what abound multiple of the same objects in a scene? Two blue circles, but only one is true landmark?
+"""
+def getInvariantObjDisplacements(obj_features, yaml_filenames):
+    #get coordinates of all matching objects in each file and compute displacement to target
+    displacements = []
+    for yaml_file in yaml_filenames:
+        obj_coords = getObjectCoordinates(obj_features, yaml_file)
+        target_coord = getTargetCoordinates(yaml_file)
+        for coord in obj_coords:
+            displacements.append(np.array(target_coord) - np.array(coord))
+
+    return displacements
+            
     
-    print s
-    invariant_objs = findInvariantObjects(filenames)
-    print "invariant objects: "
-    for obj in invariant_objs:
-        print "...", id_to_color[obj[1]], id_to_shape[obj[0]] 
+
+"""might return list if there are multiples objects with same features"""
+def getObjectCoordinates(obj_features, yaml_file):
+    data = getYamlData(yaml_file)
+    objects = data['objects']
+    obj_coord = []
+    for obj in objects:
+        if (obj[3], obj[4]) == obj_features:
+            #add coordinats of obj to list
+            obj_coord.append((obj[0], obj[1]))
+
+    return obj_coord
+
+"""get (x,y) of target for a certain yaml file"""
+def getTargetCoordinates(yaml_file):
+    data = getYamlData(yaml_file)
+    return data['target'][0], data['target'][1]
+        
+######################################################
+#Testing code
+#scenarios = ['red_triangle_right_green_circle_', 'green_square_left_blue_star_', 'blue_circle_above_red_square_']
+##scenarios = ['red_triangle_right_green_circle_']
+
+#for s in scenarios:
+#    filenames = []
+#    for i in range(1,11):
+#        filenames.append("../pilot_data/" + s + str(i) + ".yaml")
+#    
+#    print s
+#    invariant_objs = findInvariantObjects(filenames)
+#    print "invariant objects: "
+#    for obj in invariant_objs:
+#        print "...", id_to_color[obj[1]], id_to_shape[obj[0]] 
+#        print "displacements:"
+#        print getInvariantObjDisplacements(obj, filenames)
     
+#plot displacements as points 
+plt.figure(1)
+#plot right
+filenames = []
+for i in range(1,11):
+    filenames.append("../pilot_data/red_triangle_right_green_circle_" + str(i) + ".yaml")
+invariant_objs = findInvariantObjects(filenames)
+
+print "Invariant objects: "
+for obj in invariant_objs:
+    print "...", id_to_color[obj[1]], id_to_shape[obj[0]] 
+    print "displacements:"
+    displacements = getInvariantObjDisplacements(obj, filenames)
+    print displacements
+    plt.plot([d[0] for d in displacements], [d[1] for d in displacements],'o',label='right')
+
+#plot left
+filenames = []
+for i in range(1,11):
+    filenames.append("../pilot_data/green_square_left_blue_star_" + str(i) + ".yaml")
+invariant_objs = findInvariantObjects(filenames)
+
+print "Invariant objects: "
+for obj in invariant_objs:
+    print "...", id_to_color[obj[1]], id_to_shape[obj[0]] 
+    print "displacements:"
+    displacements = getInvariantObjDisplacements(obj, filenames)
+    print displacements
+    plt.plot([d[0] for d in displacements], [d[1] for d in displacements],'o',label='left')
+
+#plot above
+filenames = []
+for i in range(1,11):
+    filenames.append("../pilot_data/blue_circle_above_red_square_" + str(i) + ".yaml")
+invariant_objs = findInvariantObjects(filenames)
+
+print "Invariant objects: "
+for obj in invariant_objs:
+    print "...", id_to_color[obj[1]], id_to_shape[obj[0]] 
+    print "displacements:"
+    displacements = getInvariantObjDisplacements(obj, filenames)
+    print displacements
+    plt.plot([d[0] for d in displacements], [d[1] for d in displacements],'o',label='above')
+plt.plot(0,0,'kx',ms=10)
+plt.axis([-800, 800, -800, 800])
+plt.xlabel('x displacement')
+plt.ylabel('y displacement')
+plt.legend()
+plt.show()
+    
+

@@ -14,7 +14,7 @@ def main():
     files = ['red_triangle_right_green_circle_', 'green_square_left_blue_star_', 'blue_circle_above_red_square_']
     for f in files:
         for i in range(1,11):
-            filename = "/home/daniel/Code/LfD-NLP/pilot_data_raw/" + f + str(i) + ".yaml"
+            filename = "../pilot_data_raw/" + f + str(i) + ".yaml"
             print filename
             #filename = "/home/dsbrown/Code/LfD-NLP/yaml_code/downTest.yaml"
             
@@ -46,7 +46,7 @@ def main():
             data['target'] = world['target']
             
         
-            stream = file("/home/daniel/Code/LfD-NLP/pilot_data/" +  f + str(i) +  '.yaml', 'w')
+            stream = file("../pilot_data/" +  f + str(i) +  '.yaml', 'w')
             yaml.dump(data, stream)    # Write a YAML representation of data to 'document.yaml'.
             print yaml.dump(data)      # Output the document to the screen.
 

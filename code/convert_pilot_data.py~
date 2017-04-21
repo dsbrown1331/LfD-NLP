@@ -46,7 +46,7 @@ def main():
             data['target'] = world['target']
             
         
-            stream = file("/home/dsbrown/Code/LfD-NLP/pilot_data/" +  f + str(i) +  '.yaml', 'w')
+            stream = file("/home/daniel/Code/LfD-NLP/pilot_data/" +  f + str(i) +  '.yaml', 'w')
             yaml.dump(data, stream)    # Write a YAML representation of data to 'document.yaml'.
             print yaml.dump(data)      # Output the document to the screen.
 
