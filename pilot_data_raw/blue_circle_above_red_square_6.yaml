@@ -4,3 +4,4 @@ objects:
 - [600, 0, 100, 'star', 'blue']
 - [600, 200, 100, 'triangle', 'blue']
 - [600, 400, 100, 'circle', 'blue']
+- [0, 500, 100, 'square', 'red']

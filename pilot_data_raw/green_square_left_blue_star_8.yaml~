@@ -6,5 +6,5 @@ objects:
 - [0, 200, 100, 'triangle', 'orange']
 - [200, 200, 100, 'square', 'yellow']
 - [500, 300, 100, 'circle', 'purple']
-- [100, 500, 100, 'triange', 'purple']
+- [100, 500, 100, 'triangle', 'purple']
 

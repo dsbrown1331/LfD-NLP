@@ -79,5 +79,5 @@ for s in scenarios:
     invariant_objs = findInvariantObjects(filenames)
     print "invariant objects: "
     for obj in invariant_objs:
-        print "...", id_to_color[obj[1]], id_to_shape[obj[0]] 
+        print "*", id_to_color[obj[1]], id_to_shape[obj[0]] 
     

@@ -3,6 +3,6 @@ task_object: [100, 'square', 'green']
 objects:
 - [100, 300, 100, 'square', 'red']
 - [300, 100, 100, 'triangle', 'red']
-- [400, 300, 100, 'triangle', 'blue']
+- [400, 300, 100, 'star', 'blue']
 - [500, 300, 100, 'circle', 'green']
 

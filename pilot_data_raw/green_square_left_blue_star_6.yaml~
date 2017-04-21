@@ -4,5 +4,5 @@ objects:
 - [100, 300, 100, 'square', 'red']
 - [300, 100, 100, 'triangle', 'red']
 - [400, 300, 100, 'triangle', 'blue']
-- [300, 200, 100, 'square', 'orange']
+- [500, 300, 100, 'circle', 'green']
 
