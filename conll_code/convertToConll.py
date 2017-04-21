@@ -32,23 +32,23 @@ for user_folder in os.listdir(path_to_source):
                         #take care of contractions
                         #add won't, can't
                         if(word == "won't"):
-                            dest.write(str(word_count) + " will"  + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + "\twill"  + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
-                            dest.write(str(word_count) + " not" + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + "\tnot" + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
                         elif(word[-3:] == "n't" and word != "can't"):
-                            dest.write(str(word_count) + ' ' + word[:-3] + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + '\t' + word[:-3] + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
-                            dest.write(str(word_count) + ' ' + word[-3:] + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + '\t' + word[-3:] + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
                         elif("'" in word):
                             place = word.find("'")
-                            dest.write(str(word_count) + ' ' + word[:place] + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + '\t' + word[:place] + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
-                            dest.write(str(word_count) + ' ' + word[place:] + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + '\t' + word[place:] + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
                         else:
-                            dest.write(str(word_count) + ' ' + word + " _ _ _ _ _ _ _ _"+ '\n')
+                            dest.write(str(word_count) + '\t' + word + "\t_\t_\t_\t_\t0\t_\t_\t_"+ '\n')
                             word_count = word_count + 1
                 dest.write('\n')
                 source.close()         
