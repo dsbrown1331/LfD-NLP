@@ -79,24 +79,20 @@ def placeTarget(landmark_pos, relationship):
     landmark_x, landmark_y = landmark_pos
     if relationship == 'right':
         #place so it is in right half-plane based on position of target
-        #place so within half of the world
-        x = random.randint(landmark_x + object_width + object_buffer, min(table_width - object_buffer - object_width, landmark_x + table_width/2))
-        y = random.randint(landmark_y - object_width, landmark_y + 2 * object_width)
+        x = random.randint(landmark_x + object_width + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     elif relationship == 'left':
         #place to it is in left-half plane of position target
-        x = random.randint(max(table_topleft[0] + object_buffer, landmark_x - table_width/2), landmark_x - object_buffer - object_width)
-        y = random.randint(landmark_y - object_width, landmark_y + 2 * object_width)
+        x = random.randint(table_topleft[0] + object_buffer, landmark_x - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
     elif relationship == 'up':
         #place above landmark
-        x = random.randint(landmark_x - object_width, landmark_x + 2 * object_width)
-        y = random.randint(max(table_topleft[1] + object_buffer, landmark_y - table_width/2), landmark_y - object_buffer - object_width)
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + object_buffer, landmark_y - object_buffer - object_width)
     elif relationship == 'down':
         #place target below landmark
-        x = random.randint(landmark_x - object_width, landmark_x + 2 * object_width)
-        #print x
-        #print table_topleft[1] + landmark_y + object_width + object_buffer
-        #print min(table_width - object_buffer - object_width, landmark_y + table_width/2)
-        y = random.randint(landmark_y + object_width + object_buffer, min(table_width - object_buffer - object_width, landmark_y + table_width/2))
+        x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
+        y = random.randint(table_topleft[1] + landmark_y + object_width + object_buffer, table_width - object_buffer - object_width)
     elif relationship == 'on':
         #place target on landmark
         x = landmark_x
@@ -195,20 +191,16 @@ def generateNewObject(objects):
 
 
 def main():
-    if len(sys.argv) != 6:
-        print "usage error: python writeWorldToYaml.py -r relation -n numReps -f output_filename"
+    if len(sys.argv) != 13:
+        print "usage error: python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename"
         print 'Number of arguments:', len(sys.argv), 'arguments.'
         print 'Argument List:', str(sys.argv)
-
-    #randomly select a color and shape for landmark and object
-    
-    landmark_color = id_to_color[np.random.randint(len(colors.items()))]
-    landmark_shape = id_to_shape[np.random.randint(len(shapes.items()))]
-    object_color = id_to_color[np.random.randint(len(colors.items()))]
-    object_shape = id_to_shape[np.random.randint(len(shapes.items()))]
+    landmark_color = sys.argv[sys.argv.index('-l') + 1]
+    landmark_shape = sys.argv[sys.argv.index('-l') + 2]
+    object_color = sys.argv[sys.argv.index('-o') + 1]
+    object_shape = sys.argv[sys.argv.index('-o') + 2]
     relationship = sys.argv[sys.argv.index('-r') + 1]
-    num_objects = 3 #int(sys.argv[sys.argv.index('-n') + 1])
-    num_reps = sys.argv[sys.argv.index('-n') + 1]
+    num_objects = int(sys.argv[sys.argv.index('-n') + 1])
     filename = sys.argv[sys.argv.index('-f') + 1]
 
     print "---------------------------"
