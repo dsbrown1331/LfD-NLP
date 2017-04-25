@@ -1,0 +1,8 @@
+files: [up8_0.yaml, up8_1.yaml, up8_2.yaml, up8_3.yaml, up8_4.yaml, up8_5.yaml, up8_6.yaml,
+  up8_7.yaml, up8_8.yaml, up8_9.yaml, left8_0.yaml, left8_1.yaml, left8_2.yaml, left8_3.yaml,
+  left8_4.yaml, left8_5.yaml, left8_6.yaml, left8_7.yaml, left8_8.yaml, left8_9.yaml,
+  on8_0.yaml, on8_1.yaml, on8_2.yaml, on8_3.yaml, on8_4.yaml, on8_5.yaml, on8_6.yaml,
+  on8_7.yaml, on8_8.yaml, on8_9.yaml, down8_0.yaml, down8_1.yaml, down8_2.yaml, down8_3.yaml,
+  down8_4.yaml, down8_5.yaml, down8_6.yaml, down8_7.yaml, down8_8.yaml, down8_9.yaml,
+  right8_0.yaml, right8_1.yaml, right8_2.yaml, right8_3.yaml, right8_4.yaml, right8_5.yaml,
+  right8_6.yaml, right8_7.yaml, right8_8.yaml, right8_9.yaml]

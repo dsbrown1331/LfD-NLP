@@ -1,0 +1,12 @@
+color_map: {0: blue, 1: red, 2: green, 3: purple, 4: yellow, 5: orange}
+height: 1000
+objects:
+- [212, 499, 100, 0, 5]
+- [591, 264, 100, 4, 4]
+- [164, 187, 100, 1, 0]
+shape_map: {0: circle, 1: square, 2: triangle, 3: star, 4: diamond}
+staging_area: [1000, 100, 150]
+table: [100, 100, 800]
+target: [212, 499, 100]
+task_object: [100, 1, 5]
+width: 1300

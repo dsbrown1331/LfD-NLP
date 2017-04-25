@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 10 21:07:46 2017
+
+Simple script with examples of how to use PyYaml found online
+
+@author: daniel
+"""
+
+#first need to install yaml 
+#sudo apt-get install python-yaml
+
+import yaml
+
+#how to open a yaml file
+with open("../user_study_files/user1.yaml", 'r') as stream:
+    try:
+        world_settings = yaml.load(stream)
+        print world_settings
+    except yaml.YAMLError as exc:
+        print exc 
+
+#how to access elements
+print world_settings['files'][0]
+
+
+#how to save to yaml file
+stream = file('output.yaml', 'w')
+yaml.dump(world_settings, stream)    # Write a YAML representation of data to 'document.yaml'.
+print yaml.dump(world_settings)      # Output the document to the screen.

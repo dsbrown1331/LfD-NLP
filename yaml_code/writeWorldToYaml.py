@@ -1,13 +1,12 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 """
 Created on Mon Apr 10 21:25:04 2017
 
 usage: 
->> python writeWorldToYaml.py -o object_color object_shape -l landmark_color landmark_shape -r relation -n numObjects -f output_filename
+>> python writeWorldToYaml.py -r relation -n numRepetitions -f output_filename
 
 Example:
->> python writeWorldToYaml.py -o blue square -l red circle -r left -n 3 -f leftPlacementTest
+>> python writeWorldToYaml.py -r left -n 3 -f leftPlacementTest
 
 possible shape names: circle, square, triangle, star, diamond
 possible colors: blue, red, green, purple, yellow, orange
@@ -174,14 +173,14 @@ def dist(obj1, obj2):
     return np.sqrt(delta_x ** 2 + delta_y ** 2)
 
 #TODO add feature selection to be unique over items so we don't have duplicates
-def generateNewObject(objects):
+def generateNewObject(objects, feature_pair):
     reject_count = 0
     while True:
         #generate candidate position until we find one that fits in the world
         new_obj_x = random.randint(table_topleft[0] + object_buffer, table_width - object_buffer - object_width)
         new_obj_y = random.randint(table_topleft[1] + object_buffer, table_width - object_buffer - object_width)
-        new_obj_shape = np.random.randint(len(shapes.keys()))
-        new_obj_color = np.random.randint(len(colors.keys()))
+        new_obj_shape = feature_pair[0]
+        new_obj_color = feature_pair[1]
         new_obj = [new_obj_x, new_obj_y, object_width, new_obj_shape, new_obj_color]
         #print new_obj
         if not intersectsOtherObjects(new_obj, objects):
@@ -193,25 +192,14 @@ def generateNewObject(objects):
 
     return new_obj
 
+def generateYamlDemoFile(landmark_pair, object_pair, distractor_pairs, filename, relationship):
+    landmark_color = id_to_color[landmark_pair[1]]
+    landmark_shape = id_to_shape[landmark_pair[0]]
+    object_color = id_to_color[object_pair[1]]
+    object_shape = id_to_shape[object_pair[0]]
+    num_objects = len(distractor_pairs) + 1
 
-def main():
-    if len(sys.argv) != 6:
-        print "usage error: python writeWorldToYaml.py -r relation -n numReps -f output_filename"
-        print 'Number of arguments:', len(sys.argv), 'arguments.'
-        print 'Argument List:', str(sys.argv)
 
-    #randomly select a color and shape for landmark and object
-
-    #TODO remove duplicates!!
-    
-    landmark_color = id_to_color[np.random.randint(len(colors.items()))]
-    landmark_shape = id_to_shape[np.random.randint(len(shapes.items()))]
-    object_color = id_to_color[np.random.randint(len(colors.items()))]
-    object_shape = id_to_shape[np.random.randint(len(shapes.items()))]
-    relationship = sys.argv[sys.argv.index('-r') + 1]
-    num_objects = 3 #int(sys.argv[sys.argv.index('-n') + 1])
-    num_reps = sys.argv[sys.argv.index('-n') + 1]
-    filename = sys.argv[sys.argv.index('-f') + 1]
 
     print "---------------------------"
     print "landmark color:", landmark_color
@@ -230,6 +218,8 @@ def main():
     #define task_object
     task_object = [object_width, object_shape_id, object_color_id]
 
+    
+
     #place landmark
     landmark_x, landmark_y = placeLandmark(relationship)
     landmark_pos = (landmark_x, landmark_y)
@@ -247,7 +237,7 @@ def main():
     intersection_list = [landmark_obj, target_obj]  #includes target, used for computing intersections
     objects = [landmark_obj]                        #object array for yaml file
     for i in range(num_objects - 1):                #-1 so don't regenerate landmark
-        new_obj = generateNewObject(intersection_list)
+        new_obj = generateNewObject(intersection_list, distractor_pairs[i])
         intersection_list.append(new_obj)
         objects.append(new_obj)
         #print "generated object"
@@ -274,6 +264,43 @@ def main():
     stream = file(filename + '.yaml', 'w')
     yaml.dump(data, stream)    # Write a YAML representation of data to 'document.yaml'.
     print yaml.dump(data)      # Output the document to the screen.
+
+
+def main():
+    if len(sys.argv) != 8:
+        print "usage error: python writeWorldToYaml.py -r relation -n numReps -f output_file_path_name"
+        print 'Number of arguments:', len(sys.argv), 'arguments.'
+        print 'Argument List:', str(sys.argv)
+
+    num_reps = int(sys.argv[sys.argv.index('-n') + 1])
+    filename = sys.argv[sys.argv.index('-f') + 1]
+    relationship = sys.argv[sys.argv.index('-r') + 1]
+    
+    #randomly select a color and shape for landmark and object
+
+    #TODO remove duplicates!!
+    #compute all pairs of shape colors
+    all_pairs = [(s,c) for s in range(len(shapes)) for c in range(len(colors))]
+    
+#    print all_pairs
+    landmark_pair = all_pairs[np.random.randint(len(all_pairs))]
+    all_pairs.remove(landmark_pair)
+    object_pair = all_pairs[np.random.randint(len(all_pairs))]
+    all_pairs.remove(object_pair)
+    num_objects = 3 #two distractors + one landmark
+    
+    #pick distractor features beforehand 
+    distractor_pairs = []
+    for i in range(num_objects-1):
+        obj_pair = all_pairs[np.random.randint(len(all_pairs))]
+        all_pairs.remove(obj_pair)
+        distractor_pairs.append(obj_pair)
+    
+    #randomly generate positions
+    for rep in range(num_reps):
+        print "generating demonstration", rep
+        generateYamlDemoFile(landmark_pair, object_pair, distractor_pairs, filename + str(rep), relationship)
+
 
 if __name__=="__main__":
     main()

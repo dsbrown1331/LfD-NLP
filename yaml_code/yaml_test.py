@@ -13,7 +13,7 @@ Simple script with examples of how to use PyYaml found online
 import yaml
 
 #how to open a yaml file
-with open("example_world.yaml", 'r') as stream:
+with open("../user_study_files/user1.yaml", 'r') as stream:
     try:
         world_settings = yaml.load(stream)
         print world_settings
@@ -21,7 +21,8 @@ with open("example_world.yaml", 'r') as stream:
         print exc 
 
 #how to access elements
-print world_settings['staging_area']
+print world_settings['files'][0]
+print type(world_settings['files'][0])
 
 
 #how to save to yaml file

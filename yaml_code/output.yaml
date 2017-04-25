@@ -1,9 +1,9 @@
-height: 12
-objects:
-- [40, 30, 2, 0, 1]
-- [60, 10, 2, 1, 2]
-staging_area: [10, 10, 2, 2]
-table: [0, 0, 70, 70]
-target: [4, 1, 2]
-task_object: [2, 2, 3]
-width: 12
+files: [right1_0.yaml, right1_1.yaml, right1_2.yaml, right1_3.yaml, right1_4.yaml,
+  right1_5.yaml, right1_6.yaml, right1_7.yaml, right1_8.yaml, right1_9.yaml, on1_0.yaml,
+  on1_1.yaml, on1_2.yaml, on1_3.yaml, on1_4.yaml, on1_5.yaml, on1_6.yaml, on1_7.yaml,
+  on1_8.yaml, on1_9.yaml, up1_0.yaml, up1_1.yaml, up1_2.yaml, up1_3.yaml, up1_4.yaml,
+  up1_5.yaml, up1_6.yaml, up1_7.yaml, up1_8.yaml, up1_9.yaml, down1_0.yaml, down1_1.yaml,
+  down1_2.yaml, down1_3.yaml, down1_4.yaml, down1_5.yaml, down1_6.yaml, down1_7.yaml,
+  down1_8.yaml, down1_9.yaml, left1_0.yaml, left1_1.yaml, left1_2.yaml, left1_3.yaml,
+  left1_4.yaml, left1_5.yaml, left1_6.yaml, left1_7.yaml, left1_8.yaml, left1_9.yaml]
+foo: red

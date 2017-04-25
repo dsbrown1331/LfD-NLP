@@ -1,0 +1,9 @@
+files: [up20_0.yaml, up20_1.yaml, up20_2.yaml, up20_3.yaml, up20_4.yaml, up20_5.yaml,
+  up20_6.yaml, up20_7.yaml, up20_8.yaml, up20_9.yaml, left20_0.yaml, left20_1.yaml,
+  left20_2.yaml, left20_3.yaml, left20_4.yaml, left20_5.yaml, left20_6.yaml, left20_7.yaml,
+  left20_8.yaml, left20_9.yaml, down20_0.yaml, down20_1.yaml, down20_2.yaml, down20_3.yaml,
+  down20_4.yaml, down20_5.yaml, down20_6.yaml, down20_7.yaml, down20_8.yaml, down20_9.yaml,
+  on20_0.yaml, on20_1.yaml, on20_2.yaml, on20_3.yaml, on20_4.yaml, on20_5.yaml, on20_6.yaml,
+  on20_7.yaml, on20_8.yaml, on20_9.yaml, right20_0.yaml, right20_1.yaml, right20_2.yaml,
+  right20_3.yaml, right20_4.yaml, right20_5.yaml, right20_6.yaml, right20_7.yaml,
+  right20_8.yaml, right20_9.yaml]
