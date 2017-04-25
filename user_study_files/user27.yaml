@@ -1,9 +1,0 @@
-files: [on27_0.yaml, on27_1.yaml, on27_2.yaml, on27_3.yaml, on27_4.yaml, on27_5.yaml,
-  on27_6.yaml, on27_7.yaml, on27_8.yaml, on27_9.yaml, up27_0.yaml, up27_1.yaml, up27_2.yaml,
-  up27_3.yaml, up27_4.yaml, up27_5.yaml, up27_6.yaml, up27_7.yaml, up27_8.yaml, up27_9.yaml,
-  left27_0.yaml, left27_1.yaml, left27_2.yaml, left27_3.yaml, left27_4.yaml, left27_5.yaml,
-  left27_6.yaml, left27_7.yaml, left27_8.yaml, left27_9.yaml, down27_0.yaml, down27_1.yaml,
-  down27_2.yaml, down27_3.yaml, down27_4.yaml, down27_5.yaml, down27_6.yaml, down27_7.yaml,
-  down27_8.yaml, down27_9.yaml, right27_0.yaml, right27_1.yaml, right27_2.yaml, right27_3.yaml,
-  right27_4.yaml, right27_5.yaml, right27_6.yaml, right27_7.yaml, right27_8.yaml,
-  right27_9.yaml]

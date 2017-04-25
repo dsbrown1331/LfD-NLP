@@ -1,8 +1,0 @@
-files: [up6_0.yaml, up6_1.yaml, up6_2.yaml, up6_3.yaml, up6_4.yaml, up6_5.yaml, up6_6.yaml,
-  up6_7.yaml, up6_8.yaml, up6_9.yaml, left6_0.yaml, left6_1.yaml, left6_2.yaml, left6_3.yaml,
-  left6_4.yaml, left6_5.yaml, left6_6.yaml, left6_7.yaml, left6_8.yaml, left6_9.yaml,
-  down6_0.yaml, down6_1.yaml, down6_2.yaml, down6_3.yaml, down6_4.yaml, down6_5.yaml,
-  down6_6.yaml, down6_7.yaml, down6_8.yaml, down6_9.yaml, on6_0.yaml, on6_1.yaml,
-  on6_2.yaml, on6_3.yaml, on6_4.yaml, on6_5.yaml, on6_6.yaml, on6_7.yaml, on6_8.yaml,
-  on6_9.yaml, right6_0.yaml, right6_1.yaml, right6_2.yaml, right6_3.yaml, right6_4.yaml,
-  right6_5.yaml, right6_6.yaml, right6_7.yaml, right6_8.yaml, right6_9.yaml]

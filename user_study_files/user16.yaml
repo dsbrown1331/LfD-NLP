@@ -1,9 +1,0 @@
-files: [on16_0.yaml, on16_1.yaml, on16_2.yaml, on16_3.yaml, on16_4.yaml, on16_5.yaml,
-  on16_6.yaml, on16_7.yaml, on16_8.yaml, on16_9.yaml, up16_0.yaml, up16_1.yaml, up16_2.yaml,
-  up16_3.yaml, up16_4.yaml, up16_5.yaml, up16_6.yaml, up16_7.yaml, up16_8.yaml, up16_9.yaml,
-  left16_0.yaml, left16_1.yaml, left16_2.yaml, left16_3.yaml, left16_4.yaml, left16_5.yaml,
-  left16_6.yaml, left16_7.yaml, left16_8.yaml, left16_9.yaml, right16_0.yaml, right16_1.yaml,
-  right16_2.yaml, right16_3.yaml, right16_4.yaml, right16_5.yaml, right16_6.yaml,
-  right16_7.yaml, right16_8.yaml, right16_9.yaml, down16_0.yaml, down16_1.yaml, down16_2.yaml,
-  down16_3.yaml, down16_4.yaml, down16_5.yaml, down16_6.yaml, down16_7.yaml, down16_8.yaml,
-  down16_9.yaml]

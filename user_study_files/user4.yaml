@@ -1,8 +1,0 @@
-files: [on4_0.yaml, on4_1.yaml, on4_2.yaml, on4_3.yaml, on4_4.yaml, on4_5.yaml, on4_6.yaml,
-  on4_7.yaml, on4_8.yaml, on4_9.yaml, down4_0.yaml, down4_1.yaml, down4_2.yaml, down4_3.yaml,
-  down4_4.yaml, down4_5.yaml, down4_6.yaml, down4_7.yaml, down4_8.yaml, down4_9.yaml,
-  up4_0.yaml, up4_1.yaml, up4_2.yaml, up4_3.yaml, up4_4.yaml, up4_5.yaml, up4_6.yaml,
-  up4_7.yaml, up4_8.yaml, up4_9.yaml, right4_0.yaml, right4_1.yaml, right4_2.yaml,
-  right4_3.yaml, right4_4.yaml, right4_5.yaml, right4_6.yaml, right4_7.yaml, right4_8.yaml,
-  right4_9.yaml, left4_0.yaml, left4_1.yaml, left4_2.yaml, left4_3.yaml, left4_4.yaml,
-  left4_5.yaml, left4_6.yaml, left4_7.yaml, left4_8.yaml, left4_9.yaml]
