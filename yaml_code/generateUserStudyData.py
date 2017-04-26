@@ -205,14 +205,14 @@ def generateYamlDemoFile(landmark_pair, object_pair, distractor_pairs, filename,
 
 
 
-    print "---------------------------"
-    print "landmark color:", landmark_color
-    print "landmark shape:", landmark_shape
-    print "object color:", object_color
-    print "object shape:", object_shape
-    print "relationship:", relationship
-    print "num objects:", num_objects
-    print "---------------------------"
+#    print "---------------------------"
+#    print "landmark color:", landmark_color
+#    print "landmark shape:", landmark_shape
+#    print "object color:", object_color
+#    print "object shape:", object_shape
+#    print "relationship:", relationship
+#    print "num objects:", num_objects
+#    print "---------------------------"
 
     landmark_color_id = colors[landmark_color]
     landmark_shape_id = shapes[landmark_shape]
@@ -227,12 +227,12 @@ def generateYamlDemoFile(landmark_pair, object_pair, distractor_pairs, filename,
     #place landmark
     landmark_x, landmark_y = placeLandmark(relationship)
     landmark_pos = (landmark_x, landmark_y)
-    print "landmark_pos", landmark_pos
+    #print "landmark_pos", landmark_pos
     landmark_obj = [landmark_x, landmark_y, object_width, landmark_shape_id, landmark_color_id]   #[x, y, diameter, shape, color]
     
     #place target postion to place object
     target_x, target_y = placeTarget(landmark_pos, relationship)
-    print "target_pos", (target_x,target_y)
+    #print "target_pos", (target_x,target_y)
     target_obj = [target_x, target_y, target_width]
 
 
@@ -267,21 +267,26 @@ def generateYamlDemoFile(landmark_pair, object_pair, distractor_pairs, filename,
 
     stream = file(filename, 'w')
     yaml.dump(data, stream)    # Write a YAML representation of data to 'document.yaml'.
-    print yaml.dump(data)      # Output the document to the screen.
+    #print yaml.dump(data)      # Output the document to the screen.
 
 
 def main():
     num_reps = 10
     num_users = 30
+    seed = 1234
+    
+    #ensure that all files are the same no matter who generates them
+    random.seed(seed)
+    np.random.seed(seed)
     
     for user_id in range(num_users):
-
+        print "generating files for user", user_id
         filename = "../user_study_files/yaml_files/"
         random.shuffle(relationship_list)
-        print relationship_list
-        filenames = []
+        #print relationship_list
+        
         for relationship in relationship_list:
-            
+            filenames = []    
             #randomly select a color and shape for landmark and object
 
             #TODO remove duplicates!!
@@ -304,15 +309,15 @@ def main():
             
             #randomly generate positions
             for rep in range(num_reps):
-                print "generating demonstration", rep
+                #print "generating demonstration", rep
                 f_name = relationship + str(user_id) + "_" + str(rep) + ".yaml"
                 generateYamlDemoFile(landmark_pair, object_pair, distractor_pairs, filename + f_name, relationship)
                 filenames.append(f_name)
-        user_file_dict = {}
-        user_file_dict["files"] = filenames
-        stream = file("../user_study_files/user" + str(user_id) + ".yaml", 'w')
-        yaml.dump(user_file_dict, stream)
-        print yaml.dump(user_file_dict)
+            user_file_dict = {}
+            user_file_dict["worlds"] = filenames
+            stream = file("../user_study_files/user" + str(user_id) + "_" + relationship + ".yaml", 'w')
+            yaml.dump(user_file_dict, stream)
+            #print yaml.dump(user_file_dict)
 
 if __name__=="__main__":
     main()
