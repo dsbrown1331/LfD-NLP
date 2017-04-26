@@ -83,23 +83,23 @@ def placeTarget(landmark_pos, relationship):
     if relationship == 'right':
         #place so it is in right half-plane based on position of target
         #place so within half of the world
-        x = random.randint(landmark_x + object_width + object_buffer, min(table_topleft[0] + table_width - object_buffer - object_width, landmark_x + table_width/2))
-        y = random.randint(landmark_y - object_width/2, landmark_y + object_width)
+        x = random.randint(landmark_x + object_width + object_buffer, landmark_x + 3*object_width)
+        y = random.randint(landmark_y - object_width/4, landmark_y + object_width/2)
     elif relationship == 'left':
         #place to it is in left-half plane of position target
-        x = random.randint(max(table_topleft[0] + object_buffer, landmark_x - table_width/2), landmark_x - object_buffer - object_width)
-        y = random.randint(landmark_y - object_width/2, landmark_y + object_width)
+        x = random.randint(landmark_x - 3*object_width, landmark_x - object_buffer - object_width)
+        y = random.randint(landmark_y - object_width/4, landmark_y + object_width/2)
     elif relationship == 'up':
         #place above landmark
-        x = random.randint(landmark_x - object_width/2, landmark_x + object_width)
-        y = random.randint(max(table_topleft[1] + object_buffer, landmark_y - table_width/2), landmark_y - object_buffer - object_width)
+        x = random.randint(landmark_x - object_width/4, landmark_x + object_width/2)
+        y = random.randint(landmark_y - 3*object_width, landmark_y - object_buffer - object_width)
     elif relationship == 'down':
         #place target below landmark
-        x = random.randint(max(landmark_x - object_width/2, table_topleft[0]), min(landmark_x + object_width, table_topleft[0] + table_width))
+        x = random.randint(landmark_x - object_width/4, landmark_x + object_width/2)
         #print x
         #print table_topleft[1] + landmark_y + object_width + object_buffer
         #print min(table_width - object_buffer - object_width, landmark_y + table_width/2)
-        y = random.randint(landmark_y + object_width + object_buffer, min(table_width - object_buffer - object_width, landmark_y + table_width/2))
+        y = random.randint(landmark_y + object_width + object_buffer, landmark_y + 3*object_width)
     elif relationship == 'on':
         #place target on landmark
         x = landmark_x
@@ -118,8 +118,8 @@ def placeTarget(landmark_pos, relationship):
         print "ERROR: unknown relationship"
         sys.exit(0)
     #min and max based on edges of world
-    x = max(min(x,table_topleft[0] + table_width- object_buffer-object_width), table_top[0] + object_buffer)
-    y = max(min(y,table_topleft[1] + table_width - object_buffer-object_width), table_top[1] + object_buffer)
+    x = max(min(x,table_topleft[0] + table_width- object_buffer-object_width), table_topleft[0] + object_buffer)
+    y = max(min(y,table_topleft[1] + table_width - object_buffer-object_width), table_topleft[1] + object_buffer)
     return x,y
 
 
@@ -284,7 +284,7 @@ def main():
     
     for user_id in range(num_users):
         print "generating files for user", user_id
-        filename = "../user_study_files/yaml_files/"
+        filename = "../user_study_files/"
         random.shuffle(relationship_list)
         #print relationship_list
         
