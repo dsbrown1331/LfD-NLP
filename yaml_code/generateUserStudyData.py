@@ -83,19 +83,19 @@ def placeTarget(landmark_pos, relationship):
     if relationship == 'right':
         #place so it is in right half-plane based on position of target
         #place so within half of the world
-        x = random.randint(landmark_x + object_width + object_buffer, min(table_width - object_buffer - object_width, landmark_x + table_width/2))
-        y = random.randint(landmark_y - object_width, landmark_y + 2 * object_width)
+        x = random.randint(landmark_x + object_width + object_buffer, min(table_topleft[0] + table_width - object_buffer - object_width, landmark_x + table_width/2))
+        y = random.randint(landmark_y - object_width/2, landmark_y + object_width)
     elif relationship == 'left':
         #place to it is in left-half plane of position target
         x = random.randint(max(table_topleft[0] + object_buffer, landmark_x - table_width/2), landmark_x - object_buffer - object_width)
-        y = random.randint(landmark_y - object_width, landmark_y + 2 * object_width)
+        y = random.randint(landmark_y - object_width/2, landmark_y + object_width)
     elif relationship == 'up':
         #place above landmark
-        x = random.randint(landmark_x - object_width, landmark_x + 2 * object_width)
+        x = random.randint(landmark_x - object_width/2, landmark_x + object_width)
         y = random.randint(max(table_topleft[1] + object_buffer, landmark_y - table_width/2), landmark_y - object_buffer - object_width)
     elif relationship == 'down':
         #place target below landmark
-        x = random.randint(landmark_x - object_width, landmark_x + 2 * object_width)
+        x = random.randint(max(landmark_x - object_width/2, table_topleft[0]), min(landmark_x + object_width, table_topleft[0] + table_width))
         #print x
         #print table_topleft[1] + landmark_y + object_width + object_buffer
         #print min(table_width - object_buffer - object_width, landmark_y + table_width/2)
@@ -117,6 +117,9 @@ def placeTarget(landmark_pos, relationship):
     else:
         print "ERROR: unknown relationship"
         sys.exit(0)
+    #min and max based on edges of world
+    x = max(min(x,table_topleft[0] + table_width- object_buffer-object_width), table_top[0] + object_buffer)
+    y = max(min(y,table_topleft[1] + table_width - object_buffer-object_width), table_top[1] + object_buffer)
     return x,y
 
 
